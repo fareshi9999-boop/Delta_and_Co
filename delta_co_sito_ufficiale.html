@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta & Co — Servizi Digitali & Vibecoding</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ferrariRed: '#D40000',
+                        ferrariHover: '#B00000',
+                        bordeaux: '#7A0016',
+                        bordeauxDark: '#54000F',
+                        surfaceLight: '#faf9f9',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f9;
+            color: #0f172a;
+        }
+        .luxury-card {
+            background: #ffffff;
+            border: 1px solid rgba(122, 0, 22, 0.08);
+            box-shadow: 0 10px 30px -5px rgba(122, 0, 22, 0.03);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .luxury-card:hover {
+            border-color: rgba(212, 0, 0, 0.35);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(212, 0, 0, 0.12);
+        }
+        .glass-nav {
+            background: rgba(250, 249, 249, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(122, 0, 22, 0.08);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #7A0016 0%, #D40000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-[#faf9f9] text-slate-900 min-h-screen selection:bg-[#D40000] selection:text-white relative overflow-x-hidden">
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 group" title="Ottieni un preventivo su WhatsApp">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-sm font-semibold px-0 group-hover:px-2">WhatsApp</span>
+    </a>
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7A0016] to-[#D40000] flex items-center justify-center shadow-lg shadow-[#D40000]/20 text-white">
+                    <i data-lucide="triangle" class="w-5 h-5 transform rotate-180"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-wider text-gradient">DELTA & CO</span>
+                    <span class="block text-[10px] text-[#7A0016] font-semibold tracking-wide">(Tutti i servizi svolti esclusivamente con il vibecoding)</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
+                <a href="#servizi" class="hover:text-[#D40000] transition-colors">Servizi</a>
+                <a href="#pacchetti" class="hover:text-[#D40000] transition-colors">Offerte</a>
+                <a href="#garanzie" class="hover:text-[#D40000] transition-colors">Garanzie</a>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-5 py-2.5 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-semibold shadow-lg shadow-[#D40000]/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Preventivo
+                </a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-slate-900">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-6 py-4 flex flex-col gap-4 shadow-xl">
+            <a href="#servizi" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Servizi</a>
+            <a href="#pacchetti" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Offerte Pacchetto</a>
+            <a href="#garanzie" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Garanzie & Condizioni</a>
+            <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-5 py-3 rounded-xl bg-[#D40000] text-white font-semibold text-center flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Preventivo
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-44 pb-24 px-6 relative">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7A0016]/5 border border-[#7A0016]/15 text-[#7A0016] text-xs font-semibold mb-6 shadow-sm">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D40000]"></i> Eccellenza Digitale & Vibecoding Esclusivo
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight text-slate-900">
+                Soluzioni Digitali di Alta Classe <br><span class="text-gradient">Senza Compromessi</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Siti web sartoriali, microcontrollori programmabili, NFC e tecnologie smart all'avanguardia plasmate con il vibe coding.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-8 py-4 rounded-2xl bg-[#D40000] hover:bg-[#B00000] text-white font-bold shadow-xl shadow-[#D40000]/30 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> Ottieni Preventivo su WhatsApp
+                </a>
+                <a href="#servizi" class="px-8 py-4 rounded-2xl bg-white border border-slate-200 hover:border-[#D40000]/40 text-slate-800 font-semibold transition-all shadow-sm flex items-center gap-2">
+                    Esplora il Listino <i data-lucide="arrow-down" class="w-4 h-4 text-[#D40000]"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section / Grid -->
+    <section id="servizi" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Listino Servizi Ufficiale</h2>
+            <p class="text-slate-600 max-w-lg mx-auto">Tutti i servizi svolti esclusivamente con il vibecoding.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 1. Siti Web -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">250€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">Siti Web</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Realizzazione siti web moderni, veloci, responsive e curati in ogni dettaglio.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Siti%20Web%20(250€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 2. Microcontrollori -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">150€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">Microcontrollori Programmati</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Dispositivi hardware e microcontrollori programmabili personalizzabili.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Microcontrollori%20Programmati%20(150€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 3. Menù Digitali -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="utensils" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">50€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">Menù Digitali</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Menù digitali interattivi ed eleganti per ristoranti e locali smart.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Menu%20Digitali%20(50€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 4. Carte Soci Virtuali -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="credit-card" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">40€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">Carte Soci Virtuali</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Tessere fedeltà e membership card digitali condivisibili su smartphone.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Carte%20Soci%20Virtuali%20(40€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 5. QR Code Generator -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="qr-code" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">30-50€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">QR Code Generator</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Generazione di QR code dinamici e personalizzati per qualsiasi compito.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20QR%20Code%20Generator%20(30-50€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 6. NFC Google Review -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="star" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">30€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">NFC Google Review</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Dispositivi NFC per raccogliere recensioni Google istantanee con un semplice tocco.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20NFC%20Google%20Review%20(30€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 7. Link Appuntamenti -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="calendar" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">20€</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">Link Appuntamenti</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Configurazione sistemi di prenotazione tramite WhatsApp, email o altro.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Link%20Appuntamenti%20(20€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- 8. NFC Generici -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
+                            <i data-lucide="wifi" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black text-[#D40000]">10 <span class="text-xs font-normal text-slate-500">/pz €</span></span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">NFC Generici</h3>
+                    <p class="text-sm text-slate-600 mb-6 font-light">Tag e supporti NFC programmabili per ogni automazione smart.</p>
+                </div>
+                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20NFC%20Generici%20(10€/pz)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
+                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Package Offers Section -->
+    <section id="pacchetti" class="py-20 px-6 bg-white border-y border-slate-200/60">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7A0016]/5 border border-[#7A0016]/15 text-[#7A0016] text-xs font-semibold mb-4">
+                    <i data-lucide="percent" class="w-3.5 h-3.5 text-[#D40000]"></i> Risparmio Garantito
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Offerte a Pacchetto</h2>
+                <p class="text-slate-600 max-w-lg mx-auto font-light">Combina i servizi Delta & Co con sconti dedicati.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Package 1 -->
+                <div class="luxury-card p-8 rounded-3xl relative border-2 border-[#D40000] flex flex-col justify-between shadow-xl">
+                    <div class="absolute -top-3 right-6 bg-[#D40000] text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">Più Richiesto</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + 3 Servizi</h3>
+                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web Professionale + 3 Servizi Diversi a scelta</p>
+                        <div class="text-4xl font-black text-[#D40000] mb-6">320€</div>
+                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale (250€)</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> 3 Servizi a scelta inclusi</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Massimo risparmio applicato</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%203%20servizi%20diversi%20(320€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-semibold transition-all shadow-lg shadow-[#D40000]/30 flex items-center justify-center gap-2">
+                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="luxury-card p-8 rounded-3xl relative flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + 2 Servizi</h3>
+                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web Professionale + 2 Servizi Diversi a scelta</p>
+                        <div class="text-4xl font-black text-slate-900 mb-6">300€</div>
+                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> 2 Servizi a scelta inclusi</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sinergia digitale ideale</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%202%20servizi%20diversi%20(300€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#7A0016] hover:bg-[#54000F] text-white font-semibold transition-all flex items-center justify-center gap-2">
+                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="luxury-card p-8 rounded-3xl relative flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + Microcontrollori</h3>
+                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web + Servizio Microcontrollori integrato</p>
+                        <div class="text-4xl font-black text-slate-900 mb-6">300€</div>
+                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Microcontrollore Programmato</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Hardware e software uniti</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%20Servizio%20Microcontrollori%20(300€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#7A0016] hover:bg-[#54000F] text-white font-semibold transition-all flex items-center justify-center gap-2">
+                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Purchase Conditions & Guarantee Section -->
+    <section id="garanzie" class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Condizioni & Garanzie</h2>
+            <p class="text-slate-600 font-light">Trasparenza totale e protezione assoluta per ogni tuo acquisto.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Cosa include ogni acquisto -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000] mb-6">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-6 text-slate-900">Cosa Include Ogni Acquisto</h3>
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-[#7A0016]/10 text-[#D40000] flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                            <div>
+                                <strong class="text-slate-900 block mb-0.5">Tutela Prodotti</strong>
+                                <span class="text-sm text-slate-600 font-light">Se non funziona, sostituzione garantita in 24-48h.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-[#7A0016]/10 text-[#D40000] flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                            <div>
+                                <strong class="text-slate-900 block mb-0.5">Acconto Iniziale Flessibile</strong>
+                                <span class="text-sm text-slate-600 font-light">Acconto iniziale da 10€ in su dopo la presa visione del sito prova.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Guida Bollino & Info Garanzia 1 Anno -->
+            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between bg-gradient-to-br from-[#7A0016]/5 to-transparent">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000] mb-6">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Bollino Garanzia 1 Anno</h3>
+                    <p class="text-slate-700 mb-4 font-light text-sm leading-relaxed">
+                        Ogni servizio o prodotto è contrassegnato da un <strong class="text-[#D40000] font-semibold">bollino di garanzia ufficiale</strong> della durata di <strong class="text-slate-900">1 anno</strong> in caso di malfunzionamento.
+                    </p>
+                    <div class="bg-white/80 p-4 rounded-2xl border border-[#7A0016]/10 mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-[#7A0016] mb-1 flex items-center gap-1.5">
+                            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Dove si trova il bollino?
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed font-light">
+                            Il bollino è situato <strong class="text-slate-800">solitamente sul retro di qualsiasi prodotto</strong> ed è caratterizzato dalla scritta <strong class="text-red-600">"VOID"</strong> olografica/antimanomissione. <span class="block mt-1 font-semibold text-slate-900">Nota importante: se il prodotto è sprovvisto del bollino originale, la garanzia non è valida a prescindere.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool Interattivo Verifica Bollino -->
+        <div class="luxury-card p-8 md:p-12 rounded-3xl bg-white border-2 border-[#D40000]/20 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#D40000]/5 to-transparent pointer-events-none rounded-bl-full"></div>
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="w-14 h-14 rounded-2xl bg-[#7A0016]/10 border border-[#7A0016]/20 flex items-center justify-center text-[#D40000] mx-auto mb-4">
+                    <i data-lucide="search-check" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-black mb-2 text-slate-900">Verifica Validità Bollino Garanzia</h3>
+                <p class="text-sm text-slate-600 mb-8 font-light">Inserisci il codice numerico univoco impresso sul bollino sul retro del tuo prodotto (es. da 1876351 a 1876640).</p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+                    <input type="number" id="bollino-input" placeholder="Es. 1876380" class="px-5 py-4 rounded-xl border border-slate-300 focus:outline-none focus:border-[#D40000] focus:ring-2 focus:ring-[#D40000]/20 text-slate-900 font-mono text-center sm:text-left text-lg w-full sm:w-72 bg-slate-50">
+                    <button onclick="verificaBollino()" class="px-8 py-4 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-bold transition-all shadow-lg shadow-[#D40000]/25 flex items-center justify-center gap-2 flex-shrink-0">
+                        <i data-lucide="shield-alert" class="w-5 h-5"></i> Verifica Ora
+                    </button>
+                </div>
+
+                <!-- Risultato Verifica -->
+                <div id="bollino-result" class="hidden mt-6 p-6 rounded-2xl text-left transition-all animate-fade-in"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 py-12 px-6 text-center text-sm text-slate-500 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-[#7A0016] text-white flex items-center justify-center">
+                    <i data-lucide="triangle" class="w-4 h-4 transform rotate-180"></i>
+                </div>
+                <span class="font-bold text-slate-900 tracking-wider">DELTA & CO</span>
+            </div>
+            <p class="font-light">(Tutti i servizi svolti esclusivamente con il vibecoding). Tutti i diritti riservati.</p>
+            <p class="text-xs font-light">Assistenza WhatsApp diretta al +39 3713114843</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Verifica Bollino Function
+        function verificaBollino() {
+            const inputVal = document.getElementById('bollino-input').value.trim();
+            const resultBox = document.getElementById('bollino-result');
+            resultBox.classList.remove('hidden');
+
+            if (!inputVal) {
+                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-amber-50 border border-amber-200 text-amber-900";
+                resultBox.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-base mb-1">Inserisci un numero</h4>
+                            <p class="text-sm font-light">Inserisci il codice numerico del bollino presente sul retro del prodotto per procedere alla verifica.</p>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            const code = parseInt(inputVal, 10);
+            
+            // Check range 1876351 to 1876640 inclusive
+            if (code >= 1876351 && code <= 1876640) {
+                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-emerald-50 border border-emerald-300 text-emerald-900 shadow-sm";
+                resultBox.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-base mb-1 text-emerald-950">Garanzia valida!</h4>
+                                <p class="text-sm text-emerald-800 font-light">Codice bollino #${code} verificato con successo. Contattaci per la sostituzione o per la risoluzione dei problemi.</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20il%20mio%20bollino%20di%20garanzia%20con%20codice%20%23${code}%20%C3%A8%20valido.%20Vorrei%20richiedere%20assistenza%20o%20la%20sostituzione%20del%20prodotto." target="_blank" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-md w-full sm:w-auto flex-shrink-0">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> Contatta su WhatsApp
+                        </a>
+                    </div>
+                `;
+            } else {
+                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-red-50 border border-red-200 text-red-900 shadow-sm";
+                resultBox.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="x-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-base mb-1 text-red-950">Garanzia non valida</h4>
+                            <p class="text-sm text-red-800 font-light">Ci dispiace, questo prodotto non ha una garanzia valida o il numero inserito non risulta registrato. Ricorda che senza il bollino originale sul retro (con dicitura "VOID") la garanzia non è valida a prescindere.</p>
+                        </div>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
