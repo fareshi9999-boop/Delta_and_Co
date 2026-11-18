@@ -1,501 +1,1398 @@
 <!DOCTYPE html>
-<html lang="it" class="scroll-smooth">
+<html lang="it" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delta & Co — Servizi Digitali & Vibecoding</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ferrariRed: '#D40000',
-                        ferrariHover: '#B00000',
-                        bordeaux: '#7A0016',
-                        bordeauxDark: '#54000F',
-                        surfaceLight: '#faf9f9',
-                    }
-                }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>DELTA CORPORATION // MONOCHROME ASCII ARCHITECTURE</title>
+    
+    
+    <!-- Google Fonts: JetBrains Mono & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+
+
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --accent-white: #FFFFFF;
+            --accent-silver: #D4D4D4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--accent-silver);
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        ::selection {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        /* Custom Monochrome Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFFFFF;
+        }
+
+        /* Retro Monochrome CRT Scanlines & Vignette Effect */
+        .crt-overlay {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: 
+                linear-gradient(
+                    rgba(0, 0, 0, 0) 50%, 
+                    rgba(0, 0, 0, 0.48) 50%
+                ),
+                radial-gradient(
+                    circle at center,
+                    transparent 62%,
+                    rgba(0, 0, 0, 0.65) 100%
+                );
+            background-size: 100% 3px, 100% 100%;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        body.crt-active .crt-overlay {
+            opacity: 1;
+            animation: crtFlicker 0.14s infinite;
+        }
+
+        body.crt-active .ascii-glow {
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.75), 0 0 3px rgba(255, 255, 255, 0.95);
+        }
+
+        @keyframes crtFlicker {
+            0% { opacity: 0.96; }
+            50% { opacity: 1; }
+            100% { opacity: 0.97; }
+        }
+
+        /* Enlarged Frameless Monumental Block-Letter ASCII Logo Scaling */
+        .ascii-hero-logo-main {
+            font-size: clamp(8px, 2.7vw, 1.85rem);
+            line-height: 1.04;
+            letter-spacing: 0.03em;
+            white-space: pre;
+            user-select: none;
+        }
+
+        .ascii-hero-logo-sub {
+            font-size: clamp(5px, 1.55vw, 0.92rem);
+            line-height: 1.06;
+            letter-spacing: 0.03em;
+            white-space: pre;
+            user-select: none;
+        }
+
+        .ascii-card-icon {
+            font-size: clamp(0.45rem, 0.8vw, 0.65rem);
+            line-height: 1.05;
+            white-space: pre;
+            user-select: none;
+        }
+
+        /* Infinite Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 28s linear infinite;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Retro Monochrome Bento Spotlight Card */
+        .bento-card {
+            position: relative;
+            background: #050505;
+            border: 1px solid #262626;
+            transition: border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+            overflow: hidden;
+        }
+
+        .bento-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.09),
+                transparent 42%
+            );
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .bento-card:hover {
+            border-color: #FFFFFF;
+            box-shadow: 0 0 28px rgba(255, 255, 255, 0.08);
+        }
+
+        /* Global Scramble Target Stability */
+        [data-scramble-target] {
+            cursor: default;
+        }
+        a [data-scramble-target],
+        button [data-scramble-target],
+        a[data-scramble-target],
+        button[data-scramble-target],
+        label[data-scramble-target] {
+            cursor: pointer;
+        }
+
+        /* Monochrome Phosphor Pulse */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 24px rgba(255, 255, 255, 0.5); }
+        }
+        .phosphor-pulse {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        /* Mini Rotating Pyramid Container in Header */
+        .nav-pyramid-container {
+            font-size: 5px;
+            line-height: 1.0;
+            white-space: pre;
+            user-select: none;
+            width: 36px;
+            height: 36px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        /* ASCII Scroll-Down Arrow Animation */
+        @keyframes asciiArrowFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                opacity: 0.65;
+            }
+            50% {
+                transform: translateY(7px);
+                opacity: 1;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.85);
             }
         }
-    </script>
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #faf9f9;
-            color: #0f172a;
+
+        .ascii-scroll-arrow {
+            animation: asciiArrowFloat 2.1s infinite ease-in-out;
+            line-height: 1.05;
+            white-space: pre;
+            user-select: none;
         }
-        .luxury-card {
-            background: #ffffff;
-            border: 1px solid rgba(122, 0, 22, 0.08);
-            box-shadow: 0 10px 30px -5px rgba(122, 0, 22, 0.03);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+        /* Void-to-Matter Scroll Genesis States */
+        [data-genesis-target] {
+            opacity: 0;
+            filter: blur(4px);
+            transform: translateY(10px);
+            transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .luxury-card:hover {
-            border-color: rgba(212, 0, 0, 0.35);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(212, 0, 0, 0.12);
+
+        [data-genesis-target].genesis-visible {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0px);
         }
-        .glass-nav {
-            background: rgba(250, 249, 249, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(122, 0, 22, 0.08);
+
+        .genesis-card {
+            opacity: 0;
+            transform: translateY(18px) scale(0.99);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
         }
-        .text-gradient {
-            background: linear-gradient(135deg, #7A0016 0%, #D40000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .genesis-card.genesis-visible {
+            opacity: 1;
+            transform: translateY(0px) scale(1);
+        }
+
+        /* ---- Freccia scroll: tre chevron ASCII a cascata ---- */
+        a.scroll-link { padding: 12px 28px; min-height: 48px; }
+        .scroll-chev { display: flex; flex-direction: column; align-items: center; font-size: 20px; line-height: .72; color: #fff; user-select: none; }
+        .scroll-chev span { opacity: .12; animation: chevFall 1.8s infinite ease-in-out; }
+        .scroll-chev span:nth-child(2) { animation-delay: .2s; }
+        .scroll-chev span:nth-child(3) { animation-delay: .4s; }
+        @keyframes chevFall {
+            0%, 100% { opacity: .12; transform: translateY(-3px); text-shadow: none; }
+            45% { opacity: 1; transform: translateY(0); text-shadow: 0 0 10px rgba(255,255,255,.8); }
+        }
+        /* ---- Ottimizzazioni telefono ---- */
+        html { -webkit-text-size-adjust: 100%; }
+        a, button, select { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        body { padding-bottom: env(safe-area-inset-bottom); }
+        #hero-stage { min-height: 100vh; min-height: 100svh; }
+        .ascii-hero-logo-main, .ascii-hero-logo-sub { font-variant-ligatures: none; }
+        .ascii-glow, .crt-overlay, #hero-logo-parallax { will-change: transform, opacity; }
+        @media (max-width: 767px) {
+            [data-genesis-target] { filter: none; }
+            input, select, textarea { font-size: 16px !important; }
+            #crt-toggle { min-height: 40px; }
+            .service-order-link { padding-block: 10px; }
         }
     </style>
+<style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono,Fira Code,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.left-0{left:0}.right-0{right:0}.top-0{top:0}.top-16{top:4rem}.z-0{z-index:0}.z-10{z-index:10}.z-50{z-index:50}.mx-4{margin-left:1rem;margin-right:1rem}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:.25rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mt-16{margin-top:4rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-16{height:4rem}.h-2{height:.5rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-\[2px\]{height:2px}.h-full{height:100%}.min-h-\[45px\]{min-height:45px}.min-h-\[75px\]{min-height:75px}.min-h-screen{min-height:100vh}.w-2{width:.5rem}.w-3\.5{width:.875rem}.w-4{width:1rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.shrink-0{flex-shrink:0}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%,to{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0,0,.2,1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-not-allowed{cursor:not-allowed}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.resize-none{resize:none}.resize{resize:both}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.border{border-width:1px}.border-2{border-width:2px}.border-y{border-top-width:1px}.border-b,.border-y{border-bottom-width:1px}.border-t{border-top-width:1px}.border-delta-border{--tw-border-opacity:1;border-color:rgb(38 38 38/var(--tw-border-opacity,1))}.border-delta-border\/60{border-color:rgba(38,38,38,.6)}.border-white\/30{border-color:hsla(0,0%,100%,.3)}.border-white\/60{border-color:hsla(0,0%,100%,.6)}.border-white\/75{border-color:hsla(0,0%,100%,.75)}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\/90{background-color:rgba(0,0,0,.9)}.bg-delta-surface{--tw-bg-opacity:1;background-color:rgb(8 8 8/var(--tw-bg-opacity,1))}.bg-neutral-600{--tw-bg-opacity:1;background-color:rgb(82 82 82/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/10{background-color:hsla(0,0%,100%,.1)}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-16{padding-bottom:4rem}.pb-2{padding-bottom:.5rem}.pb-8{padding-bottom:2rem}.pt-1{padding-top:.25rem}.pt-16{padding-top:4rem}.pt-2{padding-top:.5rem}.pt-20{padding-top:5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:JetBrains Mono,Fira Code,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.28em\]{letter-spacing:.28em}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-delta-muted{--tw-text-opacity:1;color:rgb(115 115 115/var(--tw-text-opacity,1))}.text-delta-silver,.text-neutral-300{--tw-text-opacity:1;color:rgb(212 212 212/var(--tw-text-opacity,1))}.text-neutral-400{--tw-text-opacity:1;color:rgb(163 163 163/var(--tw-text-opacity,1))}.text-neutral-500{--tw-text-opacity:1;color:rgb(115 115 115/var(--tw-text-opacity,1))}.text-neutral-700{--tw-text-opacity:1;color:rgb(64 64 64/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.shadow-\[0_0_8px_\#fff\]{--tw-shadow:0 0 8px #fff;--tw-shadow-colored:0 0 8px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(.4,0,.2,1)}.duration-150,.transition-transform{transition-duration:.15s}.duration-75{transition-duration:75ms}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.selection\:bg-white ::-moz-selection{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.selection\:bg-white ::selection{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.selection\:text-black ::-moz-selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:text-black ::selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:bg-white::-moz-selection{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.selection\:bg-white::selection{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.selection\:text-black::-moz-selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:text-black::selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.hover\:border-white:hover{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.hover\:bg-neutral-300:hover{--tw-bg-opacity:1;background-color:rgb(212 212 212/var(--tw-bg-opacity,1))}.hover\:text-neutral-300:hover{--tw-text-opacity:1;color:rgb(212 212 212/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.focus\:border-white:focus,.group:hover .group-hover\:border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.group:hover .group-hover\:underline{text-decoration-line:underline}@media (min-width:640px){.sm\:mt-6{margin-top:1.5rem}.sm\:block{display:block}.sm\:inline{display:inline}.sm\:inline-flex{display:inline-flex}.sm\:min-h-\[140px\]{min-height:140px}.sm\:min-h-\[85px\]{min-height:85px}.sm\:w-auto{width:auto}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:border-l{border-left-width:1px}.sm\:border-t-0{border-top-width:0}.sm\:p-10{padding:2.5rem}.sm\:p-6{padding:1.5rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pb-4{padding-bottom:1rem}.sm\:pl-8{padding-left:2rem}.sm\:pt-0{padding-top:0}.sm\:pt-10{padding-top:2.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-\[10px\]{font-size:10px}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}.sm\:text-xs{font-size:.75rem;line-height:1rem}}@media (min-width:768px){.md\:col-span-12{grid-column:span 12/span 12}.md\:col-span-4{grid-column:span 4/span 4}.md\:col-span-5{grid-column:span 5/span 5}.md\:col-span-7{grid-column:span 7/span 7}.md\:flex{display:flex}.md\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:p-12{padding:3rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width:1024px){.lg\:col-span-5{grid-column:span 5/span 5}.lg\:col-span-7{grid-column:span 7/span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style>
 </head>
-<body class="bg-[#faf9f9] text-slate-900 min-h-screen selection:bg-[#D40000] selection:text-white relative overflow-x-hidden">
+<body class="antialiased bg-black text-delta-silver selection:bg-white selection:text-black">
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 group" title="Ottieni un preventivo su WhatsApp">
-        <i data-lucide="message-circle" class="w-7 h-7"></i>
-        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-sm font-semibold px-0 group-hover:px-2">WhatsApp</span>
-    </a>
+    <!-- CRT Scanline Overlay -->
+    <div class="crt-overlay" aria-hidden="true"></div>
 
-    <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 right-0 z-40 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7A0016] to-[#D40000] flex items-center justify-center shadow-lg shadow-[#D40000]/20 text-white">
-                    <i data-lucide="triangle" class="w-5 h-5 transform rotate-180"></i>
+    <!-- Scroll Telemetry Progress Bar -->
+    <div id="scroll-progress-bar" class="fixed top-16 left-0 h-[2px] bg-white z-50 transition-all duration-75 shadow-[0_0_8px_#fff]" style="width: 0%;"></div>
+
+    <!-- Interactive ASCII Field Canvas Background -->
+    <canvas id="ascii-bg-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70"></canvas>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-delta-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Compact Rotating Mini Pyramid & Title -->
+            <a href="#top" class="flex items-center gap-3 group">
+                <!-- Rotating Mini ASCII Pyramid in Header -->
+                <div class="nav-pyramid-container group-hover:border-white transition-colors">
+                    <pre id="nav-mini-pyramid" class="text-white ascii-glow"></pre>
                 </div>
-                <div>
-                    <span class="text-xl font-black tracking-wider text-gradient">DELTA & CO</span>
-                    <span class="block text-[10px] text-[#7A0016] font-semibold tracking-wide">(Tutti i servizi svolti esclusivamente con il vibecoding)</span>
+                <div class="flex flex-col">
+                    <span class="text-white font-bold text-sm tracking-widest uppercase scramble-hover" data-text="DELTA CORP">DELTA CORP</span>
+                    <span class="text-[10px] text-delta-muted tracking-widest">IBM-TTY // v4.2</span>
                 </div>
-            </div>
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
-                <a href="#servizi" class="hover:text-[#D40000] transition-colors">Servizi</a>
-                <a href="#pacchetti" class="hover:text-[#D40000] transition-colors">Offerte</a>
-                <a href="#garanzie" class="hover:text-[#D40000] transition-colors">Garanzie</a>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-5 py-2.5 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-semibold shadow-lg shadow-[#D40000]/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Preventivo
-                </a>
-            </nav>
-            <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-slate-900">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-        </div>
-        <!-- Mobile Nav Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-6 py-4 flex flex-col gap-4 shadow-xl">
-            <a href="#servizi" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Servizi</a>
-            <a href="#pacchetti" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Offerte Pacchetto</a>
-            <a href="#garanzie" class="text-slate-700 hover:text-[#D40000] py-1 font-medium">Garanzie & Condizioni</a>
-            <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-5 py-3 rounded-xl bg-[#D40000] text-white font-semibold text-center flex items-center justify-center gap-2">
-                <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Preventivo
             </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-xs tracking-widest uppercase">
+                <a href="#architecture" class="text-neutral-400 hover:text-white transition-colors scramble-hover" data-text="[01] PROTOCOLLI">[01] PROTOCOLLI</a>
+                <a href="#divisions" class="text-neutral-400 hover:text-white transition-colors scramble-hover" data-text="[02] LISTINO_PREZZI">[02] LISTINO_PREZZI</a>
+                <a href="#contact" class="text-neutral-400 hover:text-white transition-colors scramble-hover" data-text="[03] UPLINK">[03] UPLINK</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-3">
+                <!-- CRT Toggle Button -->
+                <button id="crt-toggle" type="button" title="Attiva/Disattiva Effetto Monitor CRT Bianco/Nero" class="px-3 py-1.5 border border-delta-border bg-delta-surface hover:border-white text-[11px] text-neutral-300 hover:text-white transition-all flex items-center gap-2 cursor-pointer">
+                    <span id="crt-indicator" class="w-2 h-2 bg-neutral-600"></span>
+                    <span>CRT: <strong id="crt-status">OFF</strong></span>
+                </button>
+
+                <!-- CTA Button -->
+                <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 bg-white text-black font-bold text-xs tracking-wider uppercase hover:bg-neutral-300 transition-colors">
+                    <span>INIT_CONTACT</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M7 7l10 10"/></svg>
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="pt-44 pb-24 px-6 relative">
-        <div class="max-w-5xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7A0016]/5 border border-[#7A0016]/15 text-[#7A0016] text-xs font-semibold mb-6 shadow-sm">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D40000]"></i> Eccellenza Digitale & Vibecoding Esclusivo
+    <!-- Main Content Wrapper -->
+    <main id="top" class="relative z-10">
+
+        <!-- FULL-VIEWPORT HERO STAGE: ISOLATED MONUMENTAL ASCII LOGO + SCROLL ARROW -->
+        <section id="hero-stage" class="min-h-screen w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 flex flex-col items-center justify-between text-center relative">
+            
+            <!-- Top Spacer & Boot Sequence Status Pill -->
+            <div class="pt-6 sm:pt-10">
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 border border-delta-border bg-black/90 text-[11px] sm:text-xs text-white">
+                    <span class="w-2 h-2 bg-white animate-ping"></span>
+                    <span id="boot-sequence-text" class="font-mono tracking-wide">SYNCING PHOSPHOR_BEAM [T-1.2s]...</span>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight text-slate-900">
-                Soluzioni Digitali di Alta Classe <br><span class="text-gradient">Senza Compromessi</span>
+
+            <!-- CENTERPIECE: MONUMENTAL BORDERLESS ASCII LOGO (Particle-Swarm Materialization) -->
+            <div id="hero-logo-parallax" class="w-full overflow-x-auto flex flex-col items-center justify-center my-auto py-6 transition-transform duration-150 ease-out">
+                <div id="logo-materialize-wrapper" class="flex flex-col items-center">
+                    <!-- GIANT BLOCK-LETTER 'ΔELTA' LOGO -->
+                    <pre id="delta-ascii-logo" class="ascii-hero-logo-main ascii-glow font-mono text-center text-white font-bold mx-auto select-none min-h-[75px] sm:min-h-[140px]"></pre>
+
+                    <!-- MATCHING BLOCK-LETTER 'CORPORATION' SUBTITLE -->
+                    <pre id="delta-ascii-sublogo" class="ascii-hero-logo-sub ascii-glow font-mono text-center text-neutral-300 font-bold mx-auto mt-4 sm:mt-6 select-none min-h-[45px] sm:min-h-[85px]"></pre>
+                </div>
+            </div>
+
+            <!-- BOTTOM: MEDIUM-SMALL ASCII SCROLL-DOWN ARROW -->
+            <div class="pb-2 sm:pb-4 flex flex-col items-center">
+                <a href="#intro-overview" aria-label="Scorri verso il basso" class="scroll-link group flex flex-col items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer">
+                    <span class="text-[9px] sm:text-[10px] tracking-[0.28em] uppercase text-neutral-500 group-hover:text-white transition-colors">SCROLL</span>
+                    <span class="scroll-chev" aria-hidden="true"><span>╲╱</span><span>╲╱</span><span>╲╱</span></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- OVERVIEW & TELEMETRY SECTION (BELOW THE FOLD) -->
+        <section id="intro-overview" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 flex flex-col items-center text-center border-t border-delta-border/60">
+            <!-- Hero Subtitle & Value Proposition -->
+            <h1 class="max-w-3xl text-xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-snug mb-5">
+                HARDWARE EMBEDDED, NFC TARGATI & ARCHITETTURE WEB
             </h1>
-            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-                Siti web sartoriali, microcontrollori programmabili, NFC e tecnologie smart all'avanguardia plasmate con il vibe coding.
+            
+            <p class="max-w-2xl text-xs sm:text-sm md:text-base text-neutral-400 leading-relaxed mb-10">
+                Soluzioni tecnologiche ad alto impatto commerciale: siti web su misura, dispositivi IoT con ESP32/Raspberry Pi, schede NFC per recensioni Google e menù digitali interattivi.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20un%20preventivo%20o%20maggiori%20informazioni%20sui%20vostri%20servizi%20con%20il%20vibe%20coding!" target="_blank" class="px-8 py-4 rounded-2xl bg-[#D40000] hover:bg-[#B00000] text-white font-bold shadow-xl shadow-[#D40000]/30 transition-all transform hover:-translate-y-1 flex items-center gap-2">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i> Ottieni Preventivo su WhatsApp
+
+            <!-- Primary & Secondary Hero CTAs -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <a href="#divisions" class="w-full sm:w-auto px-7 py-3.5 bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-neutral-300 transition-all flex items-center justify-center gap-2.5 phosphor-pulse">
+                    <span>> VISITA CATALOGO</span>
                 </a>
-                <a href="#servizi" class="px-8 py-4 rounded-2xl bg-white border border-slate-200 hover:border-[#D40000]/40 text-slate-800 font-semibold transition-all shadow-sm flex items-center gap-2">
-                    Esplora il Listino <i data-lucide="arrow-down" class="w-4 h-4 text-[#D40000]"></i>
+                <a href="#contact" class="w-full sm:w-auto px-7 py-3.5 border border-delta-border bg-delta-surface hover:border-white text-white font-medium text-xs sm:text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2.5">
+                    <span>CONTATTACI</span>
+                    <span class="text-white font-bold">[03]</span>
                 </a>
+            </div>
+
+            <!-- Telemetry Metrics Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mt-16 pt-8 border-t border-delta-border text-left">
+                <div class="p-3 bg-delta-surface border border-delta-border genesis-card">
+                    <div class="text-[10px] text-delta-muted uppercase tracking-widest mb-1">STANDARD_PREZZI</div>
+                    <div class="text-lg sm:text-xl font-bold text-white">TRASPARENTE</div>
+                </div>
+                <div class="p-3 bg-delta-surface border border-delta-border genesis-card">
+                    <div class="text-[10px] text-delta-muted uppercase tracking-widest mb-1">TECNOLOGIA_NFC</div>
+                    <div class="text-lg sm:text-xl font-bold text-white">NTAG 424</div>
+                </div>
+                <div class="p-3 bg-delta-surface border border-delta-border genesis-card">
+                    <div class="text-[10px] text-delta-muted uppercase tracking-widest mb-1">HARDWARE_MCU</div>
+                    <div class="text-lg sm:text-xl font-bold text-white">ESP32 PI</div>
+                </div>
+                <div class="p-3 bg-delta-surface border border-delta-border genesis-card">
+                    <div class="text-[10px] text-delta-muted uppercase tracking-widest mb-1">SUPPORTO_TECNICO</div>
+                    <div class="text-lg sm:text-xl font-bold text-white">24/7 ONLINE</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INFINITE SCROLLING ASCII TICKER -->
+        <div class="w-full border-y border-delta-border bg-delta-surface py-3 overflow-hidden my-4">
+            <div class="animate-marquee font-mono text-xs tracking-widest text-white">
+                <span class="mx-4">// CREAZIONE SITO WEB 300€ // MINI ARDUINO ESP32 200€ // NFC RECENSIONI GOOGLE 20€ // MENÙ DIGITALI 100€ // QR CODE GENERATOR 50€ // NFC GENERICI 10€/PZ //</span>
+                <span class="mx-4">// CREAZIONE SITO WEB 300€ // MINI ARDUINO ESP32 200€ // NFC RECENSIONI GOOGLE 20€ // MENÙ DIGITALI 100€ // QR CODE GENERATOR 50€ // NFC GENERICI 10€/PZ //</span>
+                <span class="mx-4">// CREAZIONE SITO WEB 300€ // MINI ARDUINO ESP32 200€ // NFC RECENSIONI GOOGLE 20€ // MENÙ DIGITALI 100€ // QR CODE GENERATOR 50€ // NFC GENERICI 10€/PZ //</span>
             </div>
         </div>
-    </section>
 
-    <!-- Services Section / Grid -->
-    <section id="servizi" class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Listino Servizi Ufficiale</h2>
-            <p class="text-slate-600 max-w-lg mx-auto">Tutti i servizi svolti esclusivamente con il vibecoding.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 1. Siti Web -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="globe" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">250€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">Siti Web</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Realizzazione siti web moderni, veloci, responsive e curati in ogni dettaglio.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Siti%20Web%20(250€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 2. Microcontrollori -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="cpu" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">150€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">Microcontrollori Programmati</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Dispositivi hardware e microcontrollori programmabili personalizzabili.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Microcontrollori%20Programmati%20(150€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 3. Menù Digitali -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="utensils" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">50€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">Menù Digitali</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Menù digitali interattivi ed eleganti per ristoranti e locali smart.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Menu%20Digitali%20(50€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 4. Carte Soci Virtuali -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="credit-card" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">40€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">Carte Soci Virtuali</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Tessere fedeltà e membership card digitali condivisibili su smartphone.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Carte%20Soci%20Virtuali%20(40€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 5. QR Code Generator -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="qr-code" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">30-50€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">QR Code Generator</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Generazione di QR code dinamici e personalizzati per qualsiasi compito.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20QR%20Code%20Generator%20(30-50€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 6. NFC Google Review -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="star" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">30€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">NFC Google Review</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Dispositivi NFC per raccogliere recensioni Google istantanee con un semplice tocco.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20NFC%20Google%20Review%20(30€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 7. Link Appuntamenti -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="calendar" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">20€</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">Link Appuntamenti</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Configurazione sistemi di prenotazione tramite WhatsApp, email o altro.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20Link%20Appuntamenti%20(20€)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-
-            <!-- 8. NFC Generici -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000]">
-                            <i data-lucide="wifi" class="w-6 h-6"></i>
-                        </div>
-                        <span class="text-2xl font-black text-[#D40000]">10 <span class="text-xs font-normal text-slate-500">/pz €</span></span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-slate-900">NFC Generici</h3>
-                    <p class="text-sm text-slate-600 mb-6 font-light">Tag e supporti NFC programmabili per ogni automazione smart.</p>
-                </div>
-                <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20ordinare%20o%20avere%20info%20per%20NFC%20Generici%20(10€/pz)" target="_blank" class="w-full py-3 rounded-xl bg-slate-50 hover:bg-[#D40000] text-slate-700 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 border border-slate-200 hover:border-transparent">
-                    Richiedi su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Package Offers Section -->
-    <section id="pacchetti" class="py-20 px-6 bg-white border-y border-slate-200/60">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7A0016]/5 border border-[#7A0016]/15 text-[#7A0016] text-xs font-semibold mb-4">
-                    <i data-lucide="percent" class="w-3.5 h-3.5 text-[#D40000]"></i> Risparmio Garantito
-                </div>
-                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Offerte a Pacchetto</h2>
-                <p class="text-slate-600 max-w-lg mx-auto font-light">Combina i servizi Delta & Co con sconti dedicati.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Package 1 -->
-                <div class="luxury-card p-8 rounded-3xl relative border-2 border-[#D40000] flex flex-col justify-between shadow-xl">
-                    <div class="absolute -top-3 right-6 bg-[#D40000] text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">Più Richiesto</div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + 3 Servizi</h3>
-                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web Professionale + 3 Servizi Diversi a scelta</p>
-                        <div class="text-4xl font-black text-[#D40000] mb-6">320€</div>
-                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale (250€)</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> 3 Servizi a scelta inclusi</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Massimo risparmio applicato</li>
+        <!-- SECTION 01: TECHNICAL MANIFESTO / ARCHITECTURE (DESIGN PHILOSOPHY FIRST) -->
+        <section id="architecture" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="border border-delta-border bg-delta-surface p-6 sm:p-10 md:p-12 genesis-card">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="text-xs text-neutral-400 tracking-widest uppercase">// 01. DESIGN_PHILOSOPHY</div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                            IL CODICE È LA FORMA PIÙ PURA DI ARCHITETTURA.
+                        </h2>
+                        <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                            In Delta Corporation uniamo lo sviluppo software avanzato all'hardware programmabile e alle tecnologie NFC commerciali. Ogni servizio è pensato per offrire il massimo ritorno sull'investimento con un'estetica monocromatica senza tempo.
+                        </p>
+                        <ul class="space-y-2.5 text-xs sm:text-sm text-neutral-300 pt-2">
+                            <li class="flex items-center gap-3">
+                                <span class="text-white font-bold">[+]</span>
+                                <span>Trasparenza totale dei prezzi e zero costi nascosti.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-white font-bold">[+]</span>
+                                <span>Integrazione immediata tra strumenti digitali e fisici (NFC/IoT).</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-white font-bold">[+]</span>
+                                <span>Supporto tecnico continuo e consegna rapida dei materiali.</span>
+                            </li>
                         </ul>
                     </div>
-                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%203%20servizi%20diversi%20(320€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-semibold transition-all shadow-lg shadow-[#D40000]/30 flex items-center justify-center gap-2">
-                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    </a>
-                </div>
 
-                <!-- Package 2 -->
-                <div class="luxury-card p-8 rounded-3xl relative flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + 2 Servizi</h3>
-                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web Professionale + 2 Servizi Diversi a scelta</p>
-                        <div class="text-4xl font-black text-slate-900 mb-6">300€</div>
-                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> 2 Servizi a scelta inclusi</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sinergia digitale ideale</li>
-                        </ul>
+                    <!-- ASCII Blueprint Diagram -->
+                    <div class="lg:col-span-5 bg-black border border-delta-border p-4 sm:p-6 overflow-x-auto">
+<pre class="text-[10px] sm:text-xs leading-snug text-white font-mono">
+╔═══════════════════════════════════════╗
+║      DELTA_CORP SYSTEM TOPOLOGY       ║
+╚═══════════════════════════════════════╝
+                   │
+         ┌─────────┴─────────┐
+         ▼                   ▼
+  [ DIGITAL_SERVICES ] [ HARDWARE_IOT ]
+  │  • Siti Web €300   │  • ESP32 / Pi €200
+  │  • Menù €100       │  • NFC Google €20
+  │  • QR Codes €50    │  • NFC Tag €10/pz
+  └─────────┬─────────┘  └────────┬────────┘
+            │                     │
+            └──────────┬──────────┘
+                       ▼
+         ╔═════════════════════╗
+         ║  DELTA_CORE ENGINE  ║
+         ║   STATUS: OPTIMAL   ║
+         ╚═════════════════════╝
+</pre>
                     </div>
-                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%202%20servizi%20diversi%20(300€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#7A0016] hover:bg-[#54000F] text-white font-semibold transition-all flex items-center justify-center gap-2">
-                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    </a>
-                </div>
-
-                <!-- Package 3 -->
-                <div class="luxury-card p-8 rounded-3xl relative flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-900">Sito Web + Microcontrollori</h3>
-                        <p class="text-sm text-slate-600 mb-6 font-light">Sito Web + Servizio Microcontrollori integrato</p>
-                        <div class="text-4xl font-black text-slate-900 mb-6">300€</div>
-                        <ul class="space-y-3 text-sm text-slate-700 mb-8 font-light">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Sito Web Professionale</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Microcontrollore Programmato</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#D40000]"></i> Hardware e software uniti</li>
-                        </ul>
-                    </div>
-                    <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20vorrei%20richiedere%20il%20pacchetto:%20Sito%20Web%20+%20Servizio%20Microcontrollori%20(300€)" target="_blank" class="w-full py-3.5 rounded-xl bg-[#7A0016] hover:bg-[#54000F] text-white font-semibold transition-all flex items-center justify-center gap-2">
-                        Prenota su WhatsApp <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Purchase Conditions & Guarantee Section -->
-    <section id="garanzie" class="py-20 px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900">Condizioni & Garanzie</h2>
-            <p class="text-slate-600 font-light">Trasparenza totale e protezione assoluta per ogni tuo acquisto.</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <!-- Cosa include ogni acquisto -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between">
+        <!-- SECTION 02: BENTO GRID SERVICES & PRICING -->
+        <section id="divisions" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
                 <div>
-                    <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000] mb-6">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-6 text-slate-900">Cosa Include Ogni Acquisto</h3>
-                    <ul class="space-y-4 text-slate-700">
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-[#7A0016]/10 text-[#D40000] flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">✓</div>
-                            <div>
-                                <strong class="text-slate-900 block mb-0.5">Tutela Prodotti</strong>
-                                <span class="text-sm text-slate-600 font-light">Se non funziona, sostituzione garantita in 24-48h.</span>
+                    <div class="text-xs text-neutral-400 tracking-widest uppercase mb-2">// 02. CATALOGO_SERVIZI & LISTINO</div>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-white tracking-tight">SOLUZIONI COMMERCIALI</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-neutral-400 max-w-md">
+                    Sistemi pronti all'uso, hardware programmato e interfacce digitali con prezzi trasparenti e metriche ad alte prestazioni.
+                </p>
+            </div>
+
+            <!-- Bento Grid Layout with 6 Services -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <!-- 1. Creazione Sito Web (7 cols) -->
+                <article class="bento-card genesis-card md:col-span-7 p-6 sm:p-8 flex flex-col justify-between group">
+                    <div class="flex flex-col sm:flex-row justify-between items-start gap-6 mb-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_01 // WEB</span>
+                                <span class="text-white font-mono font-bold text-base">€300</span>
                             </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-[#7A0016]/10 text-[#D40000] flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">✓</div>
-                            <div>
-                                <strong class="text-slate-900 block mb-0.5">Acconto Iniziale Flessibile</strong>
-                                <span class="text-sm text-slate-600 font-light">Acconto iniziale da 10€ in su dopo la presa visione del sito prova.</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Guida Bollino & Info Garanzia 1 Anno -->
-            <div class="luxury-card p-8 rounded-3xl flex flex-col justify-between bg-gradient-to-br from-[#7A0016]/5 to-transparent">
-                <div>
-                    <div class="w-12 h-12 rounded-2xl bg-[#7A0016]/5 border border-[#7A0016]/10 flex items-center justify-center text-[#D40000] mb-6">
-                        <i data-lucide="award" class="w-6 h-6"></i>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:underline underline-offset-4">Creazione Sito Web</h3>
+                            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                                Landing page professionali o siti vetrina completi, ottimizzati per la conversione, responsive su ogni dispositivo e progettati con estetica moderna e pulita.
+                            </p>
+                        </div>
+                        <div class="p-3 bg-black border border-delta-border text-white shrink-0">
+<pre class="ascii-card-icon">
+  ╔═══════════════════╗
+  ║ [■] [■] [■]  HTTP ║
+  ╠═══════════════════╣
+  ║  &lt;WEB_PAGE /&gt;     ║
+  ║  FEE: €300.00     ║
+  ╚═══════════════════╝
+</pre>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-slate-900">Bollino Garanzia 1 Anno</h3>
-                    <p class="text-slate-700 mb-4 font-light text-sm leading-relaxed">
-                        Ogni servizio o prodotto è contrassegnato da un <strong class="text-[#D40000] font-semibold">bollino di garanzia ufficiale</strong> della durata di <strong class="text-slate-900">1 anno</strong> in caso di malfunzionamento.
-                    </p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-[#7A0016]/10 mb-2">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-[#7A0016] mb-1 flex items-center gap-1.5">
-                            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Dove si trova il bollino?
-                        </h4>
-                        <p class="text-xs text-slate-600 leading-relaxed font-light">
-                            Il bollino è situato <strong class="text-slate-800">solitamente sul retro di qualsiasi prodotto</strong> ed è caratterizzato dalla scritta <strong class="text-red-600">"VOID"</strong> olografica/antimanomissione. <span class="block mt-1 font-semibold text-slate-900">Nota importante: se il prodotto è sprovvisto del bollino originale, la garanzia non è valida a prescindere.</span>
+                    <div class="pt-4 border-t border-delta-border flex flex-wrap items-center justify-between gap-2 text-[11px] text-neutral-400">
+                        <span>CONSEGNA RAPIDA // SEO READY</span>
+                        <a href="#contact" data-select-service="WEB" class="service-order-link text-white font-bold hover:underline">ORDINA ORA >></a>
+                    </div>
+                </article>
+
+                <!-- 2. Mini Arduino / ESP32 / Raspberry Pi (5 cols) -->
+                <article class="bento-card genesis-card md:col-span-5 p-6 sm:p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_02 // IOT</span>
+                            <span class="text-white font-mono font-bold text-base">€200</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:underline underline-offset-4">Mini Arduino (ESP32 / Pi)</h3>
+                        <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-6">
+                            Prototipi e dispositivi hardware personalizzati basati su ESP32 o Raspberry Pi con firmware custom, sensori e integrazione IoT o Wi-Fi.
                         </p>
                     </div>
+                    <div class="pt-4 border-t border-delta-border flex items-center justify-between text-[11px] text-neutral-400">
+                        <span>FIRMWARE C++ / PYTHON</span>
+                        <a href="#contact" data-select-service="ARDUINO" class="service-order-link text-white font-bold hover:underline">[ORDINA >>]</a>
+                    </div>
+                </article>
+
+                <!-- 3. NFC Recensioni Google (4 cols) -->
+                <article class="bento-card genesis-card md:col-span-4 p-6 sm:p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_03 // NFC</span>
+                            <span class="text-white font-mono font-bold text-base">€20</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:underline underline-offset-4">NFC Recensioni Google</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                            Card o targhette contactless programmate per reindirizzare istantaneamente i clienti alla pagina di scrittura recensione Google della tua attività.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-delta-border flex items-center justify-between text-[11px] text-neutral-400">
+                        <span>PLUG & PLAY</span>
+                        <a href="#contact" data-select-service="NFC_GOOGLE" class="service-order-link text-white font-bold hover:underline">BEST SELLER >></a>
+                    </div>
+                </article>
+
+                <!-- 4. Menù Digitali (4 cols) -->
+                <article class="bento-card genesis-card md:col-span-4 p-6 sm:p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_04 // MENU</span>
+                            <span class="text-white font-mono font-bold text-base">€100</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:underline underline-offset-4">Menù Digitali</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                            Menù interattivi digitalizzati per ristoranti e bar, accessibili tramite QR code o NFC, aggiornabili in tempo reale e ottimizzati per smartphone.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-delta-border flex items-center justify-between text-[11px] text-neutral-400">
+                        <span>MOBILE OPTIMIZED</span>
+                        <a href="#contact" data-select-service="MENU" class="service-order-link text-white font-bold hover:underline">[ATTIVO >>]</a>
+                    </div>
+                </article>
+
+                <!-- 5. QR Code Generator (4 cols) -->
+                <article class="bento-card genesis-card md:col-span-4 p-6 sm:p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_05 // QR</span>
+                            <span class="text-white font-mono font-bold text-base">€50</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:underline underline-offset-4">QR Code Generator</h3>
+                        <p class="text-xs text-neutral-400 leading-relaxed mb-6">
+                            Generazione di QR code dinamici e statici ad alta risoluzione personalizzati con brand, loghi e tracciamento delle scansioni per campagne marketing.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-delta-border flex items-center justify-between text-[11px] text-neutral-400">
+                        <span>VETTORIALE / PNG</span>
+                        <a href="#contact" data-select-service="QR" class="service-order-link text-white font-bold hover:underline">[PRONTO >>]</a>
+                    </div>
+                </article>
+
+                <!-- 6. NFC Generici (Full Width - 12 cols) -->
+                <article class="bento-card genesis-card md:col-span-12 p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group">
+                    <div class="max-w-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="px-2.5 py-1 bg-white/10 border border-white/30 text-white text-[11px] font-bold tracking-widest">SRV_06 // BULK_NFC</span>
+                            <span class="text-white font-mono font-bold text-base">€10 / pz</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:underline underline-offset-4">NFC Generici Programmabili</h3>
+                        <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                            Tag, card o adesivi NFC universali vergini o pre-programmati per qualsiasi utilizzo aziendale o personale (biglietti da visita digitali, automazioni smart home, condivisione Wi-Fi).
+                        </p>
+                    </div>
+                    <div class="shrink-0 flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-delta-border pt-4 sm:pt-0 sm:pl-8 w-full sm:w-auto justify-between">
+                        <div class="text-right">
+                            <div class="text-[10px] text-neutral-400 uppercase">PREZZO UNITARIO</div>
+                            <div class="text-lg font-bold text-white">€10.00 <span class="text-xs text-neutral-500">/pz</span></div>
+                        </div>
+                        <a href="#contact" data-select-service="NFC_GENERIC" class="service-order-link px-4 py-2 bg-white text-black font-bold text-xs uppercase hover:bg-neutral-300 transition-colors">
+                            ACQUISTA
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SECTION 03: ASCII-FRAMED CONTACT / UPLINK FORM -->
+        <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-10">
+                <div class="text-xs text-neutral-400 tracking-widest uppercase mb-2">// 03. ESTABLISH_UPLINK</div>
+                <h2 class="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-3">RICHIEDI UN SERVIZIO</h2>
+                <p class="text-xs sm:text-sm text-neutral-400">
+                    Compila i campi per generare automaticamente il messaggio WhatsApp verso Delta Corporation.
+                </p>
+            </div>
+
+            <!-- Brutalist ASCII Border Container -->
+            <div class="border-2 border-white/75 bg-delta-surface p-6 sm:p-10 relative genesis-card">
+                <!-- Decorative ASCII Corners -->
+                <div class="hidden sm:block text-[11px] text-neutral-500 font-mono mb-6 select-none overflow-hidden whitespace-nowrap">
+                    ╔══[ TRANSMISSION_PROTOCOL: WHATSAPP_DIRECT_UPLINK ]══════════════════════════════════════╗
+                </div>
+
+                <form id="uplink-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="sender-name" class="block text-xs text-white uppercase tracking-wider mb-2">
+                                > IDENTIFICATIVO / NOME *
+                            </label>
+                            <input type="text" id="sender-name" autocomplete="name" required placeholder="es. Mario Rossi / Attività" class="w-full px-4 py-3 bg-black border border-delta-border focus:border-white text-white text-xs sm:text-sm outline-none transition-colors font-mono">
+                        </div>
+                        <div>
+                            <label for="sender-email" class="block text-xs text-white uppercase tracking-wider mb-2">
+                                > INDIRIZZO_RETE / EMAIL *
+                            </label>
+                            <input type="email" id="sender-email" inputmode="email" autocomplete="email" required placeholder="mario@dominio.it" class="w-full px-4 py-3 bg-black border border-delta-border focus:border-white text-white text-xs sm:text-sm outline-none transition-colors font-mono">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="division-select" class="block text-xs text-white uppercase tracking-wider mb-2">
+                            > SERVIZIO_RICHIESTO
+                        </label>
+                        <select id="division-select" class="w-full px-4 py-3 bg-black border border-delta-border focus:border-white text-white text-xs sm:text-sm outline-none transition-colors font-mono">
+                            <option value="WEB">[SRV-01] Creazione Sito Web (€300)</option>
+                            <option value="ARDUINO">[SRV-02] Mini Arduino / ESP32 / Raspberry Pi (€200)</option>
+                            <option value="NFC_GOOGLE">[SRV-03] NFC Recensioni Google (€20)</option>
+                            <option value="MENU">[SRV-04] Menù Digitali (€100)</option>
+                            <option value="QR">[SRV-05] QR Code Generator (€50)</option>
+                            <option value="NFC_GENERIC">[SRV-06] NFC Generici (€10/pz)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="project-brief" class="block text-xs text-white uppercase tracking-wider mb-2">
+                            > PAYLOAD_MESSAGGIO / SPECIFICHE *
+                        </label>
+                        <textarea id="project-brief" rows="4" required placeholder="Specifica quantità (es. numero di tag NFC), dettagli del sito o specifiche hardware..." class="w-full px-4 py-3 bg-black border border-delta-border focus:border-white text-white text-xs sm:text-sm outline-none transition-colors font-mono resize-none"></textarea>
+                    </div>
+
+                    <!-- Transmission Progress Simulation Container (Hidden by default) -->
+                    <div id="transmission-box" class="hidden p-4 bg-black border border-white/60 font-mono text-xs space-y-2">
+                        <div class="flex justify-between text-white">
+                            <span id="tx-status-label">COMPILING WHATSAPP PAYLOAD...</span>
+                            <span id="tx-percent">0%</span>
+                        </div>
+                        <div id="tx-ascii-bar" class="text-white tracking-widest overflow-hidden">[░░░░░░░░░░░░░░░░░░░░]</div>
+                        <div id="tx-receipt" class="hidden text-neutral-300 pt-1 space-y-2">
+                            <div>✓ REDIRECT WHATSAPP ATTIVATO. HASH_ID: <span class="text-white font-bold" id="tx-hash">#DLT-8849A</span></div>
+                            <div>
+                                <a id="wa-fallback-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-block underline text-white font-bold hover:text-neutral-300">
+                                    [CLICCA QUI SE WHATSAPP NON SI È APERTO AUTOMATICAMENTE >>]
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                        <span class="text-[11px] text-neutral-500">INVIO AUTOMATICO SU WHATSAPP</span>
+                        <button type="submit" id="submit-uplink-btn" class="w-full sm:w-auto px-8 py-3.5 bg-white text-black font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-neutral-300 transition-all cursor-pointer flex items-center justify-center gap-2">
+                            <span>INVIA SU WHATSAPP</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/></svg>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="hidden sm:block text-[11px] text-neutral-500 font-mono mt-6 select-none overflow-hidden whitespace-nowrap">
+                    ╚══════════════════════════════════════════════════════════════════[ END_OF_FRAME ]══╝
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Tool Interattivo Verifica Bollino -->
-        <div class="luxury-card p-8 md:p-12 rounded-3xl bg-white border-2 border-[#D40000]/20 shadow-xl relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#D40000]/5 to-transparent pointer-events-none rounded-bl-full"></div>
-            <div class="max-w-2xl mx-auto text-center">
-                <div class="w-14 h-14 rounded-2xl bg-[#7A0016]/10 border border-[#7A0016]/20 flex items-center justify-center text-[#D40000] mx-auto mb-4">
-                    <i data-lucide="search-check" class="w-7 h-7"></i>
-                </div>
-                <h3 class="text-2xl font-black mb-2 text-slate-900">Verifica Validità Bollino Garanzia</h3>
-                <p class="text-sm text-slate-600 mb-8 font-light">Inserisci il codice numerico univoco impresso sul bollino sul retro del tuo prodotto (es. da 1876351 a 1876640).</p>
-                
-                <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-                    <input type="number" id="bollino-input" placeholder="Es. 1876380" class="px-5 py-4 rounded-xl border border-slate-300 focus:outline-none focus:border-[#D40000] focus:ring-2 focus:ring-[#D40000]/20 text-slate-900 font-mono text-center sm:text-left text-lg w-full sm:w-72 bg-slate-50">
-                    <button onclick="verificaBollino()" class="px-8 py-4 rounded-xl bg-[#D40000] hover:bg-[#B00000] text-white font-bold transition-all shadow-lg shadow-[#D40000]/25 flex items-center justify-center gap-2 flex-shrink-0">
-                        <i data-lucide="shield-alert" class="w-5 h-5"></i> Verifica Ora
-                    </button>
-                </div>
+    </main>
 
-                <!-- Risultato Verifica -->
-                <div id="bollino-result" class="hidden mt-6 p-6 rounded-2xl text-left transition-all animate-fade-in"></div>
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-delta-border bg-black py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+            
+            <!-- Left: Copyright & Block-ASCII Signature -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 text-neutral-400">
+                <span class="text-white font-bold">[█▄█] DELTA CORPORATION</span>
+                <span class="hidden sm:inline text-neutral-700">|</span>
+                <span>© 2026 ALL RIGHTS RESERVED.</span>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-200 py-12 px-6 text-center text-sm text-slate-500 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-[#7A0016] text-white flex items-center justify-center">
-                    <i data-lucide="triangle" class="w-4 h-4 transform rotate-180"></i>
+            <!-- Center: Live System Status & Uptime -->
+            <div class="flex items-center gap-4 px-4 py-2 bg-delta-surface border border-delta-border">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-white animate-pulse"></span>
+                    <span class="text-white font-semibold tracking-wider text-[11px]">ALL SYSTEMS OPERATIONAL</span>
                 </div>
-                <span class="font-bold text-slate-900 tracking-wider">DELTA & CO</span>
+                <span class="text-neutral-700">|</span>
+                <div class="text-neutral-400 font-mono text-[11px]">
+                    UPTIME: <span id="uptime-counter" class="text-white">00:00:00</span>
+                </div>
             </div>
-            <p class="font-light">(Tutti i servizi svolti esclusivamente con il vibecoding). Tutti i diritti riservati.</p>
-            <p class="text-xs font-light">Assistenza WhatsApp diretta al +39 3713114843</p>
+
+            <!-- Right: Back to Top -->
+            <a href="#top" class="px-4 py-2 border border-delta-border hover:border-white text-neutral-300 hover:text-white transition-colors flex items-center gap-2">
+                <span>TOP_OF_STACK</span>
+                <span>[↑]</span>
+            </a>
+
         </div>
     </footer>
 
-    <!-- JavaScript logic -->
+    <!-- INTERACTIVE LOGIC & MONOCHROME ASCII RENDERING ENGINES -->
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        // Initialize Lucide Icons
 
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // ==========================================
+        // 1. ROTATING MINI ASCII PYRAMID IN HEADER
+        // ==========================================
+        const miniPyramidEl = document.getElementById('nav-mini-pyramid');
+        let miniAngleA = 0;
+        let miniAngleB = 0;
+
+        const miniVertices = [
+            [0, -1.2, 0],
+            [-1.0, 0.8, 0.8],
+            [1.0, 0.8, 0.8],
+            [0, 0.8, -1.0]
+        ];
+        const miniEdges = [
+            [0, 1], [0, 2], [0, 3],
+            [1, 2], [2, 3], [3, 1]
+        ];
+
+        function renderMiniPyramid() {
+            const width = 13;
+            const height = 7;
+            const buffer = Array.from({ length: height }, () => Array(width).fill(' '));
+
+            const projected = miniVertices.map(([x, y, z]) => {
+                let x1 = x * Math.cos(miniAngleA) - z * Math.sin(miniAngleA);
+                let z1 = x * Math.sin(miniAngleA) + z * Math.cos(miniAngleA);
+                let y2 = y * Math.cos(miniAngleB) - z1 * Math.sin(miniAngleB);
+                let z2 = y * Math.sin(miniAngleB) + z1 * Math.cos(miniAngleB);
+
+                const fov = 3.0;
+                const dist = fov / (fov + z2 + 2.0);
+                const px = Math.round(width / 2 + x1 * dist * 5.2);
+                const py = Math.round(height / 2 + y2 * dist * 2.6);
+                return { px, py, z: z2 };
+            });
+
+            miniEdges.forEach(([i, j]) => {
+                const p1 = projected[i];
+                const p2 = projected[j];
+                const steps = Math.max(Math.abs(p2.px - p1.px), Math.abs(p2.py - p1.py), 1);
+                for (let s = 0; s <= steps; s++) {
+                    const t = s / steps;
+                    const x = Math.round(p1.px + (p2.px - p1.px) * t);
+                    const y = Math.round(p1.py + (p2.py - p1.py) * t);
+                    if (x >= 0 && x < width && y >= 0 && y < height) {
+                        buffer[y][x] = '█';
+                    }
+                }
+            });
+
+            miniPyramidEl.textContent = buffer.map(row => row.join('')).join('\n');
+            miniAngleA += 0.05;
+            miniAngleB = Math.sin(miniAngleA * 0.5) * 0.3;
+        }
+
+        setInterval(() => { if (!document.hidden) renderMiniPyramid(); }, 50);
+
+        // ==========================================
+        // 2. PARTICLE-SWARM INWARD ASCII MATERIALIZATION FOR MAIN HERO LOGO
+        // ==========================================
+        let heroLogoLocked = false;
+        let targetLogoTextGlobal = "";
+        let targetSubLogoTextGlobal = "";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const bootText = document.getElementById('boot-sequence-text');
+            const logoEl = document.getElementById('delta-ascii-logo');
+            const subLogoEl = document.getElementById('delta-ascii-sublogo');
+
+            targetLogoTextGlobal = `     ██╗       ███████╗  ██╗       ████████╗   █████╗ 
+    ████╗      ██╔════╝  ██║       ╚══██╔══╝  ██╔══██╗
+   ██╔═██╗     █████╗    ██║          ██║     ███████║
+  ██╔╝ ╚██╗    ██╔══╝    ██║          ██║     ██╔══██║
+ ██████████╗   ███████╗  ███████╗     ██║     ██║  ██║
+ ╚═════════╝   ╚══════╝  ╚══════╝     ╚═╝     ╚═╝  ╚═╝`;
+
+            targetSubLogoTextGlobal = ` ██████╗ ██████╗ ██████╗ ██████╗  ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝██╔═══██╗██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+██║     ██║   ██║██████╔╝██████╔╝██║   ██║██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║
+██║     ██║   ██║██╔══██╗██╔═══╝ ██║   ██║██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+╚██████╗╚██████╔╝██║  ██║██║     ╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝`;
+
+            let countdown = 1.0;
+            const countInterval = setInterval(() => {
+                countdown -= 0.1;
+                if (countdown > 0) {
+                    bootText.textContent = `SYNCING PHOSPHOR_BEAM [T-${countdown.toFixed(1)}s]...`;
+                } else {
+                    clearInterval(countInterval);
+                    bootText.textContent = "ASSEMBLING ASCII_MATRIX...";
+                    startSwarmAssembly(logoEl, targetLogoTextGlobal, () => {
+                        startSwarmAssembly(subLogoEl, targetSubLogoTextGlobal, () => {
+                            bootText.textContent = "SYSTEM READY // PHOSPHOR LOCK ENGAGED";
+                            heroLogoLocked = true;
+                        }, 36);
+                    }, 44);
+                }
+            }, 90);
         });
 
-        // Verifica Bollino Function
-        function verificaBollino() {
-            const inputVal = document.getElementById('bollino-input').value.trim();
-            const resultBox = document.getElementById('bollino-result');
-            resultBox.classList.remove('hidden');
+        function startSwarmAssembly(el, targetText, onComplete, totalFrames = 42) {
+            const lines = targetText.split('\n');
+            const height = lines.length;
+            const width = Math.max(...lines.map(l => l.length));
+            const noiseGlyphs = ['·', ':', '+', '*', '#', '░', '▒', '▓', '█'];
 
-            if (!inputVal) {
-                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-amber-50 border border-amber-200 text-amber-900";
-                resultBox.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <i data-lucide="alert-triangle" class="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5"></i>
-                        <div>
-                            <h4 class="font-bold text-base mb-1">Inserisci un numero</h4>
-                            <p class="text-sm font-light">Inserisci il codice numerico del bollino presente sul retro del prodotto per procedere alla verifica.</p>
-                        </div>
-                    </div>
-                `;
-                lucide.createIcons();
-                return;
+            // Build particle list for every non-space target character
+            const particles = [];
+            for (let r = 0; r < height; r++) {
+                for (let c = 0; c < width; c++) {
+                    const ch = (lines[r] && lines[r][c]) ? lines[r][c] : ' ';
+                    if (ch !== ' ') {
+                        // Spawn from outside perimeter
+                        const edge = Math.floor(Math.random() * 4);
+                        let startR = r;
+                        let startC = c;
+                        if (edge === 0) { startR = -Math.floor(Math.random() * 6 + 2); startC = Math.floor(Math.random() * width); }
+                        else if (edge === 1) { startR = height + Math.floor(Math.random() * 6 + 2); startC = Math.floor(Math.random() * width); }
+                        else if (edge === 2) { startR = Math.floor(Math.random() * height); startC = -Math.floor(Math.random() * 14 + 3); }
+                        else { startR = Math.floor(Math.random() * height); startC = width + Math.floor(Math.random() * 14 + 3); }
+
+                        particles.push({
+                            targetR: r,
+                            targetC: c,
+                            startR,
+                            startC,
+                            char: ch,
+                            delay: Math.random() * 0.25
+                        });
+                    }
+                }
             }
 
-            const code = parseInt(inputVal, 10);
-            
-            // Check range 1876351 to 1876640 inclusive
-            if (code >= 1876351 && code <= 1876640) {
-                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-emerald-50 border border-emerald-300 text-emerald-900 shadow-sm";
-                resultBox.innerHTML = `
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base mb-1 text-emerald-950">Garanzia valida!</h4>
-                                <p class="text-sm text-emerald-800 font-light">Codice bollino #${code} verificato con successo. Contattaci per la sostituzione o per la risoluzione dei problemi.</p>
-                            </div>
-                        </div>
-                        <a href="https://wa.me/393713114843?text=Salve%20Delta%20%26%20Co,%20il%20mio%20bollino%20di%20garanzia%20con%20codice%20%23${code}%20%C3%A8%20valido.%20Vorrei%20richiedere%20assistenza%20o%20la%20sostituzione%20del%20prodotto." target="_blank" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-md w-full sm:w-auto flex-shrink-0">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i> Contatta su WhatsApp
-                        </a>
-                    </div>
-                `;
-            } else {
-                resultBox.className = "mt-6 p-6 rounded-2xl text-left bg-red-50 border border-red-200 text-red-900 shadow-sm";
-                resultBox.innerHTML = `
-                    <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="x-circle" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-base mb-1 text-red-950">Garanzia non valida</h4>
-                            <p class="text-sm text-red-800 font-light">Ci dispiace, questo prodotto non ha una garanzia valida o il numero inserito non risulta registrato. Ricorda che senza il bollino originale sul retro (con dicitura "VOID") la garanzia non è valida a prescindere.</p>
-                        </div>
-                    </div>
-                `;
-            }
-            lucide.createIcons();
+            let frame = 0;
+            const interval = setInterval(() => {
+                frame++;
+                const rawProgress = frame / totalFrames;
+                const grid = Array.from({ length: height }, () => Array(width).fill(' '));
+
+                particles.forEach(p => {
+                    const adjusted = Math.max(0, Math.min(1, (rawProgress - p.delay) / (1 - p.delay)));
+                    // Cubic ease-out
+                    const ease = 1 - Math.pow(1 - adjusted, 3);
+                    const curR = Math.round(p.startR + (p.targetR - p.startR) * ease);
+                    const curC = Math.round(p.startC + (p.targetC - p.startC) * ease);
+
+                    if (curR >= 0 && curR < height && curC >= 0 && curC < width) {
+                        if (adjusted > 0.88) {
+                            grid[curR][curC] = p.char;
+                        } else {
+                            const glyphIdx = Math.min(noiseGlyphs.length - 1, Math.floor(adjusted * noiseGlyphs.length));
+                            grid[curR][curC] = noiseGlyphs[glyphIdx];
+                        }
+                    }
+                });
+
+                el.textContent = grid.map(row => row.join('')).join('\n');
+
+                if (frame >= totalFrames) {
+                    clearInterval(interval);
+                    el.textContent = targetText;
+                    if (onComplete) onComplete();
+                }
+            }, 24);
         }
+
+        // ==========================================
+        // 3. SCROLL-DRIVEN HERO DISPERSION & PROGRESS TELEMETRY
+        // ==========================================
+        const scrollProgressBar = document.getElementById('scroll-progress-bar');
+        const heroParallaxContainer = document.getElementById('hero-logo-parallax');
+        const disperseGlyphs = ['█', '▓', '▒', '░', '#', '*', ':', '.', '·'];
+
+        function applyHeroScrollDissolve(originalText, ratio) {
+            if (ratio <= 0.02) return originalText;
+            return originalText.split('\n').map(line => {
+                let out = '';
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (ch === ' ') {
+                        out += ' ';
+                    } else {
+                        const rand = Math.random();
+                        if (rand < ratio * 1.15) {
+                            out += ' ';
+                        } else if (rand < ratio * 1.65) {
+                            out += disperseGlyphs[Math.floor(Math.random() * disperseGlyphs.length)];
+                        } else {
+                            out += ch;
+                        }
+                    }
+                }
+                return out;
+            }).join('\n');
+        }
+
+        let scrollTick = false, lastDissolve = -1;
+        function onScrollFrame() {
+            scrollTick = false;
+            const scrollTop = window.scrollY;
+            const vh = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight - vh;
+            scrollProgressBar.style.width = `${docHeight > 0 ? (scrollTop / docHeight) * 100 : 0}%`;
+
+            const heroRatio = Math.min(1, Math.max(0, scrollTop / (vh * 0.75)));
+            if (heroParallaxContainer) {
+                heroParallaxContainer.style.transform = `translate3d(0, ${scrollTop * 0.28}px, 0) scale(${1 - heroRatio * 0.06})`;
+                heroParallaxContainer.style.opacity = `${Math.max(0, 1 - heroRatio * 1.15)}`;
+            }
+            if (heroLogoLocked && targetLogoTextGlobal && targetSubLogoTextGlobal) {
+                const q = Math.round(heroRatio * 20) / 20;
+                if (q !== lastDissolve) {
+                    lastDissolve = q;
+                    const logoEl = document.getElementById('delta-ascii-logo');
+                    const subLogoEl = document.getElementById('delta-ascii-sublogo');
+                    logoEl.textContent = q > 0.03 ? applyHeroScrollDissolve(targetLogoTextGlobal, q) : targetLogoTextGlobal;
+                    subLogoEl.textContent = q > 0.03 ? applyHeroScrollDissolve(targetSubLogoTextGlobal, q) : targetSubLogoTextGlobal;
+                }
+            }
+        }
+        window.addEventListener('scroll', () => {
+            if (!scrollTick) { scrollTick = true; requestAnimationFrame(onScrollFrame); }
+        }, { passive: true });
+
+        // ==========================================
+        // 4. CRT MONITOR TOGGLE ENGINE
+        // ==========================================
+        let crtEnabled = false;
+        const crtToggleBtn = document.getElementById('crt-toggle');
+        const crtStatusEl = document.getElementById('crt-status');
+        const crtIndicator = document.getElementById('crt-indicator');
+
+        crtToggleBtn.addEventListener('click', () => {
+            crtEnabled = !crtEnabled;
+            if (crtEnabled) {
+                document.body.classList.add('crt-active');
+                crtStatusEl.textContent = "ON";
+                crtIndicator.classList.remove('bg-neutral-600');
+                crtIndicator.classList.add('bg-white', 'animate-pulse');
+            } else {
+                document.body.classList.remove('crt-active');
+                crtStatusEl.textContent = "OFF";
+                crtIndicator.classList.remove('bg-white', 'animate-pulse');
+                crtIndicator.classList.add('bg-neutral-600');
+            }
+        });
+
+        // ==========================================
+        // 5. "CHARACTERS MATERIALIZING FROM THIN AIR" SCROLL GENESIS ENGINE
+        // ==========================================
+        const voidNoiseGlyphs = "·.:*+░▒▓█#@";
+        const activeGenesisTimers = new WeakMap();
+        const lastHoverTime = new WeakMap();
+
+        // Genesis effect: characters emerge out of empty spaces -> faint ASCII noise -> solid letters
+        function triggerGenesisMaterialization(el) {
+            const originalText = el.getAttribute('data-original-text');
+            if (!originalText || !originalText.trim()) return;
+
+            if (activeGenesisTimers.has(el)) {
+                clearInterval(activeGenesisTimers.get(el));
+                activeGenesisTimers.delete(el);
+            }
+
+            el.classList.add('genesis-visible');
+
+            const len = originalText.length;
+            const totalSteps = len > 100 ? 28 : (len > 40 ? 24 : 20);
+            let step = 0;
+
+            const interval = setInterval(() => {
+                step++;
+                const progress = step / totalSteps;
+                let result = "";
+
+                for (let i = 0; i < len; i++) {
+                    const ch = originalText[i];
+                    if (ch === " " || ch === "\n" || ch === "\t") {
+                        result += ch;
+                        continue;
+                    }
+
+                    // Wave front moving left-to-right with organic jitter
+                    const charThreshold = (i / len) * 0.65;
+                    const localProgress = (progress - charThreshold) / 0.35;
+
+                    if (localProgress <= 0) {
+                        // Still void / empty air
+                        result += " ";
+                    } else if (localProgress < 0.45) {
+                        // Faint spark from nothing
+                        result += Math.random() > 0.45 ? "·" : ":";
+                    } else if (localProgress < 0.85) {
+                        // Dense ASCII block condensation
+                        result += voidNoiseGlyphs[Math.floor(Math.random() * voidNoiseGlyphs.length)];
+                    } else {
+                        // Final crisp character
+                        result += ch;
+                    }
+                }
+
+                el.textContent = result;
+
+                if (step >= totalSteps) {
+                    clearInterval(interval);
+                    activeGenesisTimers.delete(el);
+                    el.textContent = originalText;
+                }
+            }, 26);
+
+            activeGenesisTimers.set(el, interval);
+        }
+
+        // Hover quick-decode for interactive elements
+        function triggerHoverDecode(el) {
+            const originalText = el.getAttribute('data-original-text');
+            if (!originalText || !originalText.trim()) return;
+
+            const now = performance.now();
+            const last = lastHoverTime.get(el) || 0;
+            if (now - last < 550) return;
+            lastHoverTime.set(el, now);
+
+            if (activeGenesisTimers.has(el)) {
+                clearInterval(activeGenesisTimers.get(el));
+                activeGenesisTimers.delete(el);
+            }
+
+            const len = originalText.length;
+            let iterations = 0;
+            const stepInc = Math.max(0.7, len / 18);
+
+            const interval = setInterval(() => {
+                let res = "";
+                for (let i = 0; i < len; i++) {
+                    const ch = originalText[i];
+                    if (ch === " " || ch === "\n" || ch === "\t") res += ch;
+                    else if (i < iterations) res += ch;
+                    else res += voidNoiseGlyphs[Math.floor(Math.random() * voidNoiseGlyphs.length)];
+                }
+                el.textContent = res;
+                if (iterations >= len) {
+                    clearInterval(interval);
+                    activeGenesisTimers.delete(el);
+                    el.textContent = originalText;
+                }
+                iterations += stepInc;
+            }, 22);
+
+            activeGenesisTimers.set(el, interval);
+        }
+
+        function initScrollGenesisEngine() {
+            const excludedTags = new Set(['PRE', 'SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'CANVAS', 'SVG', 'PATH', 'I']);
+            const excludedIds = new Set(['boot-sequence-text', 'uptime-counter', 'tx-percent', 'tx-ascii-bar', 'tx-hash', 'delta-ascii-logo', 'delta-ascii-sublogo', 'nav-mini-pyramid']);
+
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode(node) {
+                        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                        const parent = node.parentElement;
+                        if (!parent) return NodeFilter.FILTER_REJECT;
+
+                        // Skip header & hero stage (hero has its own dedicated swarm animation)
+                        if (parent.closest('header') || parent.closest('#hero-stage')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+
+                        let curr = parent;
+                        while (curr) {
+                            if (excludedTags.has(curr.tagName)) return NodeFilter.FILTER_REJECT;
+                            if (curr.id && excludedIds.has(curr.id)) return NodeFilter.FILTER_REJECT;
+                            if (curr.classList && curr.classList.contains('animate-marquee')) return NodeFilter.FILTER_REJECT;
+                            curr = curr.parentElement;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+
+            const textNodes = [];
+            let currentNode;
+            while ((currentNode = walker.nextNode())) {
+                textNodes.push(currentNode);
+            }
+
+            const targets = [];
+
+            textNodes.forEach(textNode => {
+                const parent = textNode.parentElement;
+                const rawText = textNode.nodeValue;
+
+                if (parent.childNodes.length === 1) {
+                    const cleanText = rawText.replace(/\s+/g, ' ').trim();
+                    if (!cleanText) return;
+                    parent.textContent = ""; // Start empty from nothing
+                    parent.setAttribute('data-original-text', cleanText);
+                    parent.setAttribute('data-genesis-target', 'true');
+                    targets.push(parent);
+                } else {
+                    const leadingSpace = /^\s/.test(rawText) ? ' ' : '';
+                    const trailingSpace = /\s$/.test(rawText) ? ' ' : '';
+                    const cleanText = rawText.replace(/\s+/g, ' ').trim();
+                    if (!cleanText) return;
+
+                    const wrapper = document.createElement('span');
+                    wrapper.textContent = ""; // Start empty from nothing
+                    wrapper.setAttribute('data-original-text', cleanText);
+                    wrapper.setAttribute('data-genesis-target', 'true');
+
+                    const frag = document.createDocumentFragment();
+                    if (leadingSpace) frag.appendChild(document.createTextNode(leadingSpace));
+                    frag.appendChild(wrapper);
+                    if (trailingSpace) frag.appendChild(document.createTextNode(trailingSpace));
+
+                    parent.replaceChild(frag, textNode);
+                    targets.push(wrapper);
+                }
+            });
+
+            // Interactive hover effect for buttons/links
+            targets.forEach(target => {
+                const interactiveContainer = target.closest('a, button, label');
+                if (interactiveContainer) {
+                    interactiveContainer.addEventListener('mouseenter', () => {
+                        triggerHoverDecode(target);
+                    });
+                }
+            });
+
+            // Also observe header links for hover scramble
+            document.querySelectorAll('.scramble-hover').forEach(el => {
+                const txt = el.getAttribute('data-text') || el.textContent.trim();
+                el.setAttribute('data-original-text', txt);
+                el.addEventListener('mouseenter', () => triggerHoverDecode(el));
+            });
+
+            // IntersectionObserver for text genesis on scroll
+            const textObserver = new IntersectionObserver((entries, obs) => {
+                let stagger = 0;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        obs.unobserve(el);
+                        setTimeout(() => {
+                            triggerGenesisMaterialization(el);
+                        }, stagger);
+                        stagger = Math.min(stagger + 55, 450);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -30px 0px'
+            });
+
+            targets.forEach(target => textObserver.observe(target));
+
+            // IntersectionObserver for cards & ASCII diagrams
+            const cardObserver = new IntersectionObserver((entries, obs) => {
+                let cardStagger = 0;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        obs.unobserve(card);
+                        setTimeout(() => {
+                            card.classList.add('genesis-visible');
+                        }, cardStagger);
+                        cardStagger = Math.min(cardStagger + 80, 400);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -25px 0px'
+            });
+
+            document.querySelectorAll('.genesis-card').forEach(card => cardObserver.observe(card));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initScrollGenesisEngine();
+        });
+
+        // ==========================================
+        // 6. BENTO CARD SPOTLIGHT CURSOR TRACKING & AUTO-SELECT SERVICE
+        // ==========================================
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        document.querySelectorAll('.service-order-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const serviceCode = link.getAttribute('data-select-service');
+                const selectEl = document.getElementById('division-select');
+                if (selectEl && serviceCode) {
+                    selectEl.value = serviceCode;
+                }
+            });
+        });
+
+        // ==========================================
+        // 7. INTERACTIVE MONOCHROME BACKGROUND ASCII PARTICLE FIELD
+        // ==========================================
+        const bgCanvas = document.getElementById('ascii-bg-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const gridChars = ['.', '·', '+', ':', '░', '▒', '█'];
+        const isTouch = matchMedia('(pointer: coarse)').matches;
+        const BG_MS = isTouch ? 66 : 33;           // ~15 fps su telefono, ~30 su desktop
+        let mousePos = { x: -1000, y: -1000 };
+        let bgW = 0, bgH = 0, spacing = 34;
+
+        function resizeBgCanvas() {
+            // Ignora i resize causati dalla barra indirizzi che appare/scompare
+            if (bgW && window.innerWidth === bgW && Math.abs(window.innerHeight - bgH) < 160) return;
+            bgW = bgCanvas.width = window.innerWidth;
+            bgH = bgCanvas.height = window.innerHeight;
+            spacing = bgW < 640 ? 40 : 34;
+        }
+        window.addEventListener('resize', resizeBgCanvas);
+        resizeBgCanvas();
+
+        window.addEventListener('mousemove', (e) => { mousePos.x = e.clientX; mousePos.y = e.clientY; }, { passive: true });
+        const setTouch = (e) => { const t = e.touches[0]; if (t) { mousePos.x = t.clientX; mousePos.y = t.clientY; } };
+        window.addEventListener('touchstart', setTouch, { passive: true });
+        window.addEventListener('touchmove', setTouch, { passive: true });
+        window.addEventListener('touchend', () => { mousePos.x = mousePos.y = -1000; }, { passive: true });
+
+        let bgTime = 0, lastBg = 0;
+        function renderBgAscii(ts) {
+            requestAnimationFrame(renderBgAscii);
+            if (document.hidden || ts - lastBg < BG_MS) return;
+            lastBg = ts;
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            const cols = Math.ceil(bgCanvas.width / spacing);
+            const rows = Math.ceil(bgCanvas.height / spacing);
+
+            bgCtx.font = '11px "JetBrains Mono", monospace';
+            bgCtx.textAlign = 'center';
+            bgCtx.textBaseline = 'middle';
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const x = c * spacing + spacing / 2;
+                    const y = r * spacing + spacing / 2;
+                    const dx = x - mousePos.x;
+                    const dy = y - mousePos.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const wave = Math.sin(c * 0.25 + r * 0.25 + bgTime * 0.03);
+
+                    if (dist < 160) {
+                        const intensity = 1 - dist / 160;
+                        bgCtx.fillStyle = `rgba(255, 255, 255, ${0.18 + intensity * 0.65})`;
+                        bgCtx.fillText(gridChars[Math.floor(intensity * (gridChars.length - 1))], x, y);
+                    } else if (wave > 0.65) {
+                        bgCtx.fillStyle = 'rgba(255, 255, 255, 0.10)';
+                        bgCtx.fillText('.', x, y);
+                    } else {
+                        bgCtx.fillStyle = 'rgba(255, 255, 255, 0.035)';
+                        bgCtx.fillText('·', x, y);
+                    }
+                }
+            }
+            bgTime += BG_MS / 16.7;   // stessa velocità dell'onda a qualsiasi fps
+        }
+        requestAnimationFrame(renderBgAscii);
+
+        // ==========================================
+        // 8. UPLINK CONTACT FORM -> WHATSAPP AUTO-REDIRECT (+39 3713114843)
+        // ==========================================
+        const uplinkForm = document.getElementById('uplink-form');
+        const txBox = document.getElementById('transmission-box');
+        const txStatusLabel = document.getElementById('tx-status-label');
+        const txPercent = document.getElementById('tx-percent');
+        const txAsciiBar = document.getElementById('tx-ascii-bar');
+        const txReceipt = document.getElementById('tx-receipt');
+        const txHash = document.getElementById('tx-hash');
+        const waFallbackLink = document.getElementById('wa-fallback-link');
+        const submitBtn = document.getElementById('submit-uplink-btn');
+
+        uplinkForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nameVal = document.getElementById('sender-name').value.trim();
+            const emailVal = document.getElementById('sender-email').value.trim();
+            const selectEl = document.getElementById('division-select');
+            const serviceLabel = selectEl.options[selectEl.selectedIndex].text;
+            const briefVal = document.getElementById('project-brief').value.trim();
+
+            const randomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+            const orderHash = `#DLT-${randomCode}`;
+
+            const waMessage = [
+                `*DELTA CORPORATION // NUOVA RICHIESTA*`,
+                `-----------------------------------`,
+                `*ID Ordine:* ${orderHash}`,
+                `*Cliente:* ${nameVal}`,
+                `*Email:* ${emailVal}`,
+                `*Servizio:* ${serviceLabel}`,
+                `*Specifiche:* ${briefVal}`
+            ].join('\n');
+
+            const whatsappUrl = `https://wa.me/393713114843?text=${encodeURIComponent(waMessage)}`;
+            waFallbackLink.href = whatsappUrl;
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            txBox.classList.remove('hidden');
+            txReceipt.classList.add('hidden');
+            txStatusLabel.textContent = "COMPILING WHATSAPP PAYLOAD...";
+
+            let progress = 0;
+            const totalBlocks = 20;
+
+            const txInterval = setInterval(() => {
+                progress += 10;
+                const filled = Math.round((progress / 100) * totalBlocks);
+                const empty = totalBlocks - filled;
+                txAsciiBar.textContent = `[${'█'.repeat(filled)}${'░'.repeat(empty)}]`;
+                txPercent.textContent = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(txInterval);
+                    txStatusLabel.textContent = "PAYLOAD READY // OPENING WHATSAPP...";
+                    txHash.textContent = orderHash;
+                    txReceipt.classList.remove('hidden');
+
+                    window.location.href = whatsappUrl;
+
+                    uplinkForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }, 45);
+        });
+
+        // ==========================================
+        // 9. LIVE SYSTEM UPTIME COUNTER
+        // ==========================================
+        const uptimeEl = document.getElementById('uptime-counter');
+        let secondsElapsed = 0;
+
+        setInterval(() => {
+            secondsElapsed++;
+            const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+            uptimeEl.textContent = `${hrs}:${mins}:${secs}`;
+        }, 1000);
     </script>
 </body>
 </html>
